@@ -22,12 +22,12 @@ def compare_traces(
     """
     if not trace_a.exists():
         print(f"ERROR: {trace_a} not found")
-        print("Run: python -m powell_sdm_folly.main --policy a --seed 42")
+        print("Run: python -m powell_sdm_lab.main --policy a --seed 42")
         return
 
     if not trace_b.exists():
         print(f"ERROR: {trace_b} not found")
-        print("Run: python -m powell_sdm_folly.main --policy b --seed 42")
+        print("Run: python -m powell_sdm_lab.main --policy b --seed 42")
         return
 
     print("\n" + "=" * 80)

@@ -1,6 +1,6 @@
-# Powell SDM Folly — Trace‑First Exploration
+# Powell SDM Lab — Trace‑First Exploration
 
-**Intent**: Folly (experimental, pedagogical)
+**Intent**: Lab (experimental, pedagogical)
 
 ## What
 
@@ -24,16 +24,16 @@ The primary output is **human-readable trace files** showing step-by-step decisi
 # From py/ directory with venv activated
 
 # Install the package (first time only)
-uv pip install -e packages/labs/powell_sdm_folly
+uv pip install -e packages/labs/powell_sdm_lab
 
 # Run Policy A (constant base-stock)
-python -m powell_sdm_folly.main --policy a --seed 42 --T 28
+python -m powell_sdm_lab.main --policy a --seed 42 --T 28
 
 # Run Policy B (forecast-driven with learning)
-python -m powell_sdm_folly.main --policy b --seed 42 --T 28
+python -m powell_sdm_lab.main --policy b --seed 42 --T 28
 
 # Compare both policies
-python -m powell_sdm_folly.compare
+python -m powell_sdm_lab.compare
 ```
 
 ## Output
@@ -52,7 +52,7 @@ Each line shows:
 ## Test
 
 ```bash
-pytest packages/labs/powell_sdm_folly
+pytest packages/labs/powell_sdm_lab
 ```
 
 ## Why

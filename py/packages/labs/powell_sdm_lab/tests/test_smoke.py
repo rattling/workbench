@@ -1,4 +1,4 @@
-"""Smoke test for Powell SDM folly"""
+"""Smoke test for Powell SDM lab"""
 
 import subprocess
 from pathlib import Path
@@ -11,7 +11,7 @@ def test_policy_a_runs():
         [
             "python",
             "-m",
-            "powell_sdm_folly.main",
+            "powell_sdm_lab.main",
             "--policy",
             "a",
             "--seed",
@@ -38,7 +38,7 @@ def test_policy_b_runs():
         [
             "python",
             "-m",
-            "powell_sdm_folly.main",
+            "powell_sdm_lab.main",
             "--policy",
             "b",
             "--seed",

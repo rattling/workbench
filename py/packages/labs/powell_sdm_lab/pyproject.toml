@@ -1,7 +1,7 @@
 [project]
-name = "powell-sdm-folly"
+name = "powell-sdm-lab"
 version = "0.1.0"
-description = "Powell SDM Folly - Trace-first exploration of Sequential Decision-Making"
+description = "Powell SDM Lab - Trace-first exploration of Sequential Decision-Making"
 requires-python = ">=3.11"
 dependencies = []
 

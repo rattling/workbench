@@ -1,5 +1,5 @@
 """
-Main entry point for Powell SDM Folly
+Main entry point for Powell SDM Lab
 
 Runs one policy through T time steps and writes trace file.
 """
@@ -7,10 +7,10 @@ Runs one policy through T time steps and writes trace file.
 import argparse
 from pathlib import Path
 
-from powell_sdm_folly.demand_process import generate_demands
-from powell_sdm_folly.env_inventory import InventoryEnv
-from powell_sdm_folly.policies import PolicyA, PolicyB
-from powell_sdm_folly.trace import TraceWriter, write_summary
+from powell_sdm_lab.demand_process import generate_demands
+from powell_sdm_lab.env_inventory import InventoryEnv
+from powell_sdm_lab.policies import PolicyA, PolicyB
+from powell_sdm_lab.trace import TraceWriter, write_summary
 
 
 def run_policy(
@@ -83,7 +83,7 @@ def run_policy(
 def main():
     """CLI entry point."""
     parser = argparse.ArgumentParser(
-        description="Run Powell SDM folly with specified policy"
+        description="Run Powell SDM lab with specified policy"
     )
     parser.add_argument(
         "--policy",
@@ -132,10 +132,10 @@ def main():
     print(f"\n{'='*60}")
     print("Next steps:")
     if args.policy == "a":
-        print("  Run Policy B: python -m powell_sdm_folly.main --policy b --seed 42")
+        print("  Run Policy B: python -m powell_sdm_lab.main --policy b --seed 42")
     else:
-        print("  Run Policy A: python -m powell_sdm_folly.main --policy a --seed 42")
-    print("  Compare both: python -m powell_sdm_folly.compare")
+        print("  Run Policy A: python -m powell_sdm_lab.main --policy a --seed 42")
+    print("  Compare both: python -m powell_sdm_lab.compare")
     print(f"{'='*60}\n")
 
 

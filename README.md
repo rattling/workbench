@@ -18,7 +18,7 @@ source py/.venv/bin/activate
 
 ```bash
 # Quick experiment (minimal structure)
-./scripts/new-folly.sh my-experiment
+./scripts/new-lab.sh my-experiment
 
 # Use-case driven app (more structure)
 ./scripts/new-app.sh my-app

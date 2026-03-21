@@ -19,14 +19,14 @@ help:
 
 powell-run:
 	@echo "==> Running Policy A (T=$(T), seed=$(SEED))..."
-	@python -m powell_sdm_folly.main --policy a --seed $(SEED) --T $(T)
+	@python -m powell_sdm_lab.main --policy a --seed $(SEED) --T $(T)
 	@echo ""
 	@echo "==> Running Policy B (T=$(T), seed=$(SEED))..."
-	@python -m powell_sdm_folly.main --policy b --seed $(SEED) --T $(T)
+	@python -m powell_sdm_lab.main --policy b --seed $(SEED) --T $(T)
 
 powell-compare:
 	@echo ""
-	@python -m powell_sdm_folly.compare
+	@python -m powell_sdm_lab.compare
 
 powell-all: powell-run powell-compare
 	@echo ""

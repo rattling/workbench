@@ -6,7 +6,7 @@ Two contrasting approaches:
 - Policy B: Forecast-driven base-stock (with online demand model)
 """
 
-from powell_sdm_folly.demand_model import OnlineDemandModel
+from powell_sdm_lab.demand_model import OnlineDemandModel
 
 
 class PolicyA:

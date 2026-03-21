@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# new-folly.sh <name>
+# new-lab.sh <name>
 # Create a new experimental Python project in labs/
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -22,7 +22,7 @@ if [ -d "$PROJECT_DIR" ]; then
   exit 1
 fi
 
-echo "==> Creating folly: $PROJECT_NAME"
+echo "==> Creating lab: $PROJECT_NAME"
 
 # Create directory structure
 mkdir -p "$PROJECT_DIR/src/$PACKAGE_NAME"
@@ -82,7 +82,7 @@ EOF
 cat > "$PROJECT_DIR/README.md" <<EOF
 # $PROJECT_NAME
 
-**Intent**: Folly (experimental)
+**Intent**: Lab (experimental)
 
 ## What
 
@@ -106,7 +106,7 @@ pytest packages/labs/$PROJECT_NAME
 \`\`\`
 EOF
 
-echo "✅ Created folly: $PROJECT_NAME"
+echo "✅ Created lab: $PROJECT_NAME"
 echo ""
 echo "Location: $PROJECT_DIR"
 echo ""

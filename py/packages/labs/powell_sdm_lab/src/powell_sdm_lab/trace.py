@@ -6,7 +6,7 @@ Primary learning artifact for understanding Powell's framework.
 """
 
 from pathlib import Path
-from powell_sdm_folly.env_inventory import StepRecord
+from powell_sdm_lab.env_inventory import StepRecord
 
 
 class TraceWriter:

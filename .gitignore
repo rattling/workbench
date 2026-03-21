@@ -207,4 +207,4 @@ marimo/_lsp/
 __marimo__/
 
 # Workbench project outputs
-py/packages/follies/runs/
+py/packages/labs/runs/

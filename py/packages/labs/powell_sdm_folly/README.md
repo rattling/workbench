@@ -24,7 +24,7 @@ The primary output is **human-readable trace files** showing step-by-step decisi
 # From py/ directory with venv activated
 
 # Install the package (first time only)
-uv pip install -e packages/follies/powell_sdm_folly
+uv pip install -e packages/labs/powell_sdm_folly
 
 # Run Policy A (constant base-stock)
 python -m powell_sdm_folly.main --policy a --seed 42 --T 28
@@ -52,7 +52,7 @@ Each line shows:
 ## Test
 
 ```bash
-pytest packages/follies/powell_sdm_folly
+pytest packages/labs/powell_sdm_folly
 ```
 
 ## Why

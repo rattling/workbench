@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # new-folly.sh <name>
-# Create a new experimental Python project in follies/
+# Create a new experimental Python project in labs/
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -14,7 +14,7 @@ if [ $# -lt 1 ]; then
 fi
 
 PROJECT_NAME="$1"
-PROJECT_DIR="$REPO_ROOT/py/packages/follies/$PROJECT_NAME"
+PROJECT_DIR="$REPO_ROOT/py/packages/labs/$PROJECT_NAME"
 PACKAGE_NAME="${PROJECT_NAME//-/_}"
 
 if [ -d "$PROJECT_DIR" ]; then
@@ -102,7 +102,7 @@ python -m ${PACKAGE_NAME}.main
 ## Test
 
 \`\`\`bash
-pytest packages/follies/$PROJECT_NAME
+pytest packages/labs/$PROJECT_NAME
 \`\`\`
 EOF
 
@@ -114,5 +114,5 @@ echo "Next steps:"
 echo "  cd py"
 echo "  source .venv/bin/activate  # if not already activated"
 echo "  python -m ${PACKAGE_NAME}.main"
-echo "  pytest packages/follies/$PROJECT_NAME"
+echo "  pytest packages/labs/$PROJECT_NAME"
 echo ""

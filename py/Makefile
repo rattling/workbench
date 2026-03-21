@@ -30,8 +30,8 @@ powell-compare:
 
 powell-all: powell-run powell-compare
 	@echo ""
-	@echo "✅ Complete! Trace files available in packages/follies/runs/"
+	@echo "✅ Complete! Trace files available in packages/labs/runs/"
 
 clean-runs:
-	@rm -f packages/follies/runs/policy_*.txt
+	@rm -f packages/labs/runs/policy_*.txt
 	@echo "Cleaned run outputs"

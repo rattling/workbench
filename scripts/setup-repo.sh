@@ -16,7 +16,7 @@ mkdir -p "$REPO_ROOT/tools"
 
 # Create Python workspace structure
 mkdir -p "$REPO_ROOT/py/packages/apps"
-mkdir -p "$REPO_ROOT/py/packages/follies"
+mkdir -p "$REPO_ROOT/py/packages/labs"
 mkdir -p "$REPO_ROOT/py/packages/rube"
 mkdir -p "$REPO_ROOT/py/packages/lib"
 

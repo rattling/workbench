@@ -26,8 +26,8 @@ def test_policy_a_runs():
 
     assert result.returncode == 0, f"Policy A failed: {result.stderr}"
 
-    # Check output file exists (runs dir is at py/packages/follies/runs/)
-    runs_dir = Path(__file__).parent.parent.parent.parent / "follies" / "runs"
+    # Check output file exists (runs dir is at py/packages/labs/runs/)
+    runs_dir = Path(__file__).parent.parent.parent.parent / "labs" / "runs"
     trace_file = runs_dir / "policy_a_latest.txt"
     assert trace_file.exists(), f"Trace file not created at {trace_file}"
 
@@ -53,7 +53,7 @@ def test_policy_b_runs():
 
     assert result.returncode == 0, f"Policy B failed: {result.stderr}"
 
-    # Check output file exists (runs dir is at py/packages/follies/runs/)
-    runs_dir = Path(__file__).parent.parent.parent.parent / "follies" / "runs"
+    # Check output file exists (runs dir is at py/packages/labs/runs/)
+    runs_dir = Path(__file__).parent.parent.parent.parent / "labs" / "runs"
     trace_file = runs_dir / "policy_b_latest.txt"
     assert trace_file.exists(), f"Trace file not created at {trace_file}"

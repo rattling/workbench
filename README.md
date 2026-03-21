@@ -38,7 +38,7 @@ cd py
 python -m my_project.main
 
 # Test a project
-pytest packages/follies/my-experiment
+pytest packages/labs/my-experiment
 
 # Format and lint
 ruff format packages/apps/my-app

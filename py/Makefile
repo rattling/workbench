@@ -1,4 +1,4 @@
-.PHONY: help powell-run powell-compare powell-all clean-runs
+.PHONY: help new-lab powell-run powell-compare powell-all clean-runs
 
 # Default parameters (can override: make powell-all T=56)
 T ?= 28
@@ -6,16 +6,24 @@ SEED ?= 42
 
 help:
 	@echo "Available targets:"
+	@echo "  new-lab         - Create a new lab package (NAME=<name>)"
 	@echo "  powell-all      - Run both policies and compare results"
 	@echo "  powell-run      - Run both Policy A and Policy B"
 	@echo "  powell-compare  - Compare existing trace files"
 	@echo "  clean-runs      - Remove generated trace files"
 	@echo ""
 	@echo "Parameters:"
+	@echo "  NAME=<name>     - Lab name for new-lab"
 	@echo "  T=<num>         - Number of time periods (default: 28)"
 	@echo "  SEED=<num>      - Random seed (default: 42)"
 	@echo ""
-	@echo "Example: make powell-all T=56 SEED=99"
+	@echo "Examples:"
+	@echo "  make new-lab NAME=p2-optimisation"
+	@echo "  make powell-all T=56 SEED=99"
+
+new-lab:
+	@test -n "$(NAME)" || (echo "Usage: make new-lab NAME=<name>"; exit 1)
+	@cd .. && bash scripts/new-lab.sh $(NAME)
 
 powell-run:
 	@echo "==> Running Policy A (T=$(T), seed=$(SEED))..."

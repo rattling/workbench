@@ -2,117 +2,108 @@
 set -euo pipefail
 
 # new-lab.sh <name>
-# Create a new experimental Python project in labs/
+#
+# Create a new lab package under packages/labs/.
+# The Python module name is derived by replacing hyphens with underscores.
+#
+# Examples:
+#   ./new-lab.sh phase1-randomness-uncertainty
+#   ./new-lab.sh markov-chains
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 if [ $# -lt 1 ]; then
   echo "Usage: $0 <name>"
-  echo "Example: $0 my-experiment"
+  echo ""
+  echo "Examples:"
+  echo "  $0 phase1-randomness-uncertainty"
+  echo "  $0 markov-chains"
   exit 1
 fi
 
-PROJECT_NAME="$1"
-PROJECT_DIR="$REPO_ROOT/py/packages/labs/$PROJECT_NAME"
-PACKAGE_NAME="${PROJECT_NAME//-/_}"
+NAME="$1"
+PKG_DIR="$REPO_ROOT/py/packages/labs/$NAME"
+MODULE="${NAME//-/_}"
 
-if [ -d "$PROJECT_DIR" ]; then
-  echo "ERROR: Project '$PROJECT_NAME' already exists at $PROJECT_DIR"
+if [ -d "$PKG_DIR" ]; then
+  echo "ERROR: '$NAME' already exists at $PKG_DIR"
   exit 1
 fi
 
-echo "==> Creating lab: $PROJECT_NAME"
+echo "==> Creating lab: $NAME (module: $MODULE)"
 
-# Create directory structure
-mkdir -p "$PROJECT_DIR/src/$PACKAGE_NAME"
-mkdir -p "$PROJECT_DIR/tests"
+mkdir -p "$PKG_DIR/src/$MODULE"
+mkdir -p "$PKG_DIR/tests"
 
-# Create pyproject.toml
-cat > "$PROJECT_DIR/pyproject.toml" <<EOF
+cat > "$PKG_DIR/pyproject.toml" <<EOF
 [project]
-name = "$PROJECT_NAME"
+name = "$NAME"
 version = "0.1.0"
-description = "Experimental project: $PROJECT_NAME"
+description = "$NAME"
 requires-python = ">=3.11"
 dependencies = []
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
 EOF
 
-# Create main.py
-cat > "$PROJECT_DIR/src/$PACKAGE_NAME/main.py" <<EOF
-"""
-$PROJECT_NAME
+cat > "$PKG_DIR/src/$MODULE/__init__.py" <<EOF
+"""$NAME"""
+EOF
 
-Quick experiment - not meant to be polished.
-"""
+cat > "$PKG_DIR/src/$MODULE/main.py" <<EOF
+"""$NAME"""
 
 
 def main():
-    print("Hello from $PROJECT_NAME!")
+    print("Hello from $NAME!")
 
 
 if __name__ == "__main__":
     main()
 EOF
 
-# Create __init__.py
-cat > "$PROJECT_DIR/src/$PACKAGE_NAME/__init__.py" <<EOF
-"""$PROJECT_NAME"""
+cat > "$PKG_DIR/tests/test_smoke.py" <<EOF
+"""Smoke test for $NAME"""
 
-__version__ = "0.1.0"
-EOF
-
-# Create smoke test
-cat > "$PROJECT_DIR/tests/test_smoke.py" <<EOF
-"""Smoke test for $PROJECT_NAME"""
-
-from ${PACKAGE_NAME} import main
+from $MODULE import main
 
 
 def test_main_runs():
-    """Verify main() executes without error"""
     main.main()
 EOF
 
-# Create README
-cat > "$PROJECT_DIR/README.md" <<EOF
-# $PROJECT_NAME
-
-**Intent**: Lab (experimental)
-
-## What
-
-Quick description of what you're exploring.
-
-## Why
-
-Why you're building this / what you want to learn.
+cat > "$PKG_DIR/README.md" <<EOF
+# $NAME
 
 ## Run
 
 \`\`\`bash
-# From py/ directory with venv activated
-python -m ${PACKAGE_NAME}.main
+# From py/ directory
+python -m ${MODULE}.main
 \`\`\`
 
 ## Test
 
 \`\`\`bash
-pytest packages/labs/$PROJECT_NAME
+pytest packages/labs/$NAME
 \`\`\`
 EOF
 
-echo "✅ Created lab: $PROJECT_NAME"
 echo ""
-echo "Location: $PROJECT_DIR"
+echo "✅ $PKG_DIR"
 echo ""
-echo "Next steps:"
-echo "  cd py"
-echo "  source .venv/bin/activate  # if not already activated"
-echo "  python -m ${PACKAGE_NAME}.main"
-echo "  pytest packages/labs/$PROJECT_NAME"
+
+cd "$REPO_ROOT/py"
+uv sync
+
 echo ""
+echo "  python -m ${MODULE}.main"
+echo "  pytest packages/labs/$NAME"
+echo ""
+

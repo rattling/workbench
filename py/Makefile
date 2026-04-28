@@ -22,8 +22,12 @@ help:
 	@echo "  make powell-all T=56 SEED=99"
 
 new-lab:
-	@test -n "$(NAME)" || (echo "Usage: make new-lab NAME=<name>"; exit 1)
-	@cd .. && bash scripts/new-lab.sh $(NAME)
+	@test -n "$(NAME)" || (echo "Usage: make new-lab NAME=<name>  (add FULL=1 for standalone package)"; exit 1)
+	@if [ "$(FULL)" = "1" ]; then \
+	  cd .. && bash scripts/new-lab.sh --full $(NAME); \
+	else \
+	  cd .. && bash scripts/new-lab.sh $(NAME); \
+	fi
 
 powell-run:
 	@echo "==> Running Policy A (T=$(T), seed=$(SEED))..."

@@ -3,12 +3,14 @@ name = "workbench"
 version = "0.1.0"
 description = "Workbench Python workspace"
 requires-python = ">=3.11"
+dependencies = ["labs"]
 
 [tool.uv.workspace]
-members = ["packages/*/*"]
-exclude = ["packages/*/runs"]
+members = ["packages/labs", "packages/*/*"]
+exclude = ["packages/*/runs", "packages/labs/src", "packages/labs/tests"]
 
 [tool.uv.sources]
+labs = { workspace = true }
 
 [tool.ruff]
 line-length = 100

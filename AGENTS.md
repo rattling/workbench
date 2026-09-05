@@ -70,3 +70,22 @@ print('clean')"
 uv sync                      # everything the live labs need
 uv sync --group archive      # + torch and pysr, only for archive/toy_world_model
 ```
+
+### Notebook kernel
+
+Notebooks must run on the **`Python (workbench)`** kernel — this repo's `.venv`. It is pinned in
+each notebook's metadata and registered with:
+
+```bash
+uv run python -m ipykernel install --user --name workbench --display-name "Python (workbench)"
+```
+
+If a cell reports `ModuleNotFoundError: No module named 'labs.prob_models'`, the kernel is wrong,
+not the install. Note the shape of that error: `labs` **resolved** and only the submodule was
+missing — meaning some *other* `labs` package was imported. `~/repos/iris/labs` is a separate
+project that also ships a package called `labs` and registers a user-level kernel displayed as
+`Python (labs)`; picking it here imports iris's code. Check with:
+
+```python
+import labs; print(labs.__path__)   # must be .../workbench/src/labs
+```

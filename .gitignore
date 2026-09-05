@@ -207,7 +207,7 @@ marimo/_lsp/
 __marimo__/
 
 # Workbench project outputs
-py/packages/labs/runs/
+runs/
 
 # Lab run artifacts (PySR checkpoints, hall of fame, etc.)
 outputs/

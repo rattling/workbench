@@ -1,0 +1,51 @@
+[project]
+name = "workbench"
+version = "0.1.0"
+description = "Workbench — labs, notebooks and notes for the stochastics thread"
+requires-python = ">=3.11"
+dependencies = [
+    "ipykernel>=7.2.0",
+    "matplotlib>=3.10.9",
+    "mplcursors>=0.7.1",
+    "nbformat>=5.10.4",
+    "numpy>=2.4.4",
+    "plotly>=6.7.0",
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[dependency-groups]
+dev = ["pytest>=9.0.2"]
+
+# Heavy deps used only by archive/toy_world_model (torch ~2.5GB, pysr pulls Julia).
+# Not installed by default. To run that lab again:  uv sync --group archive
+archive = [
+    "pysr>=1.5.10",
+    "torch>=2.11.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = ["archive", "notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+# P, Q, A, T are the standard symbols for transition/sub-matrices. Renaming them
+# to satisfy pep8-naming would make the maths harder to read, not easier.
+ignore = ["N803", "N806"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

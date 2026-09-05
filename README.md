@@ -1,52 +1,40 @@
 # workbench
 
-Prototypes for everything. A single repository for high-velocity STEM exploration, learning, and small builds.
+A personal workbench for STEM exploration and small builds. Its current tenant is a
+**stochastics learning thread**: working through the material of Ross, *Introduction to
+Probability Models*, by building first and using the text as an examination layer rather than a
+curriculum.
 
-## Quick Start
+Start with [`docs/CHARTER.md`](docs/CHARTER.md) for the method and
+[`STATE-OF-PLAY.md`](STATE-OF-PLAY.md) for where things stand.
 
-### First Time Setup
-
-```bash
-# Initialize repository structure and Python environment
-./scripts/setup-repo.sh
-
-# Activate Python environment
-source py/.venv/bin/activate
-```
-
-### Create a New Project
+## Quick start
 
 ```bash
-# Quick experiment (minimal structure)
-./scripts/new-lab.sh my-experiment
-
-# Use-case driven app (more structure)
-./scripts/new-app.sh my-app
-
-# Deliberately overengineered (full ceremony)
-./scripts/new-rube.sh my-complex-thing
+uv sync                                        # one venv, from pyproject.toml
+uv run python -m labs.prob_models.regime_chain # the founding example, with theory tripwires
+make gate                                      # lint + format + tests
+make notebook                                  # jupyter lab in notebooks/
 ```
 
-### Daily Workflow
+## Layout
+
+| Path | What's there |
+|---|---|
+| `src/labs/` | The machinery. Anything over ~30 lines lives here, not in a notebook. |
+| `tests/` | Tripwires — hand-derived theory checked against the code. |
+| `notebooks/` | The journey. Every claim runs. |
+| `notes/` | `LORE.md` (the bug ledger), `patterns/`, `worked/` |
+| `docs/` | Charter and reference |
+| `archive/` | Parked threads — see [`archive/README.md`](archive/README.md) |
+
+## Adding a lab
 
 ```bash
-# Activate environment
-source py/.venv/bin/activate
-
-# Run a project
-cd py
-python -m my_project.main
-
-# Test a project
-pytest packages/labs/my-experiment
-
-# Format and lint
-ruff format packages/apps/my-app
-ruff check packages/apps/my-app
+make lab NAME=arrival_streams
 ```
 
-## Philosophy
-
-Read [REPO_SETUP.md](REPO_SETUP.md) for the full design philosophy and structure.
-
-**TL;DR**: Start here by default. Build fast. Graduate projects to their own repos only when this becomes a genuine constraint.
+Creates `src/labs/arrival_streams/` and `tests/arrival_streams/`. Import it as
+`from labs.arrival_streams import ...`; run it with
+`uv run python -m labs.arrival_streams.main`. One package, one venv, one `pyproject.toml` —
+nothing to register.

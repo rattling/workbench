@@ -1,7 +1,7 @@
 # State of play — stochastics thread
 
 *Live state. Update at every close-out. Method and invariants live in
-[`docs/CHARTER.md`](docs/CHARTER.md); bugs live in [`notes/LORE.md`](notes/LORE.md).*
+[`CHARTER.md`](CHARTER.md); bugs live in [`notes/LORE.md`](notes/LORE.md).*
 
 **Last updated:** 2026-09-05
 
@@ -53,6 +53,10 @@ spell lengths (geometric, 2.5), Bonus-Malus end to end with the nature-vs-posite
 - Notebook 01 §9's Ross problem numbers depend on which edition is to hand. Not yet filled in.
 
 ## Recently done
+
+**2026-09-30 — projects layout.** The workbench took a second tenant (bioplastics), so the
+thread moved from `src/labs/`, `tests/`, `notebooks/` and `notes/` into `projects/stochastics/`.
+Imports are now `projects.stochastics.prob_models`. Nothing inside the thread changed.
 
 **2026-09-05 — repo restructure.** Flattened `py/packages/labs/src/labs/` to `src/labs/`; killed
 the uv workspace (four `pyproject.toml`s that declared no dependencies between them). Merged the

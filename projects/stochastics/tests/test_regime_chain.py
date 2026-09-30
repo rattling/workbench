@@ -13,7 +13,7 @@ Anchor numbers (from the hand derivations):
 import numpy as np
 import pytest
 
-from labs.prob_models.regime_chain import (
+from projects.stochastics.prob_models.regime_chain import (
     LABELS,
     T,
     empirical_distribution,

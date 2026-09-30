@@ -13,7 +13,7 @@ P is manufactured from the two; it is not itself a primitive.
 import numpy as np
 import pytest
 
-from labs.prob_models.bonus_malus import (
+from projects.stochastics.prob_models.bonus_malus import (
     N_STATES,
     PREMIUMS,
     average_premium,

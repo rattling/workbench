@@ -2,72 +2,57 @@
 
 ## What this is
 
-A personal workbench. Its current and primary tenant is a **stochastics learning thread** —
-working through the material of Ross, *Introduction to Probability Models*, by building first and
-using the text as an examination layer. Other prototypes are welcome here, but the stochastics
-thread sets the conventions.
+A personal workbench of self-contained research projects. Each project lives in its own folder
+under `projects/`, with its own code, notebooks, notes and tests side by side. All projects share
+one `pyproject.toml`, one venv and one root package.
 
-Read `docs/CHARTER.md` before doing anything substantive. The method is not negotiable and it is
-not obvious — text-first was tried and abandoned for good reasons.
+**Before working in a project, read its `AGENTS.md` (or `README.md` if it has none).** Project
+rules apply inside that project only — the stochastics thread's rules about ✍️ cells and Ross
+exercises, for example, don't bind anything else.
 
-## Read order
+| Project | What it is |
+|---|---|
+| [`projects/stochastics/`](projects/stochastics/AGENTS.md) | Ross, *Introduction to Probability Models*, build-first |
+| [`projects/bioplastics/`](projects/bioplastics/README.md) | Researching and modelling biodegradable plastics |
 
-1. `docs/CHARTER.md` — purpose, success criterion, invariants, scope ladder, anchor numbers
-2. `STATE-OF-PLAY.md` — where the thread actually is right now, and what's next
-3. `notes/LORE.md` — the bug ledger. **Read this before debugging anything.**
-4. `~/repos/ways-of-working/WORKING-CONTRACT.md` — how work is delegated and handed back
+Also read `~/repos/ways-of-working/WORKING-CONTRACT.md` — how work is delegated and handed back.
 
 ## Layout
 
 ```
-src/labs/<lab>/       the machinery — anything over ~30 lines lives here, not in a notebook
-tests/<lab>/          tripwires: hand-derived theory vs the code
-notebooks/            the journey. Every claim runs; ✍️ cells are written unaided
-notes/                LORE.md (bugs), patterns/ (recurrence shapes), worked/ (solved problems)
-docs/                 CHARTER.md and reference
-data/                 gitignored except .gitkeep
+projects/<name>/      one project: README or AGENTS.md, then whatever it needs
+                      (code subpackages, notebooks/, notes/, tests/). Markdown-only is fine.
+docs/                 workbench-wide reference only (KaTeX cheatsheet)
+data/                 local data, not project-specific
+scripts/              repo tooling
 archive/              parked threads. Not maintained, not linted, not tested.
 ```
 
-One package, one venv, one `pyproject.toml`. A lab is a subpackage of `labs`, imported as
-`from labs.prob_models import ...`. There is no workspace and nothing to register — adding a lab
-is `make lab NAME=<name>`.
+Code imports as `projects.<name>.<module>` — e.g. `from projects.stochastics.prob_models import
+regime_chain`. There is no workspace and nothing to register. `make project NAME=<name>` scaffolds
+a new one: a README and an `__init__.py`, nothing more. Add folders when the work asks for them.
+
+Tests live in each project's `tests/` and are collected with `--import-mode=importlib`, so test
+file names only need to be unique within a project.
 
 ## Rules
 
-- **The cord:** three consecutive text-decoding exchanges without running code — stop and build.
-  Either party pulls it.
-- **Never write the ✍️ prose cells.** Those are retrieval practice; filling them in destroys the
-  exercise. Scaffold them, mark them TODO, leave them.
-- **Never do the Ross exercises**, or hint at their answers, unless explicitly asked for a
-  post-mortem *after* a genuine cold attempt.
-- Tripwires assert hand-derived closed forms. Never assert a value the code just produced.
-- Wrong guesses are curriculum — when a prediction misses, record the gap rather than silently
-  fixing it.
-- Surprises go to `notes/LORE.md` as one dated line. Decisions go to the charter, not lore.
 - `archive/` is read-only history. Don't refactor it, lint it, or fold it back in unrevised.
+- Nothing crosses between projects implicitly. If one project imports another, say so in the
+  importing project's README.
 
 ## Gate
 
 ```bash
-make gate      # ruff check + ruff format --check + pytest
+make gate      # ruff check + ruff format --check + pytest across all projects
 ```
 
-Everything must be green before a thread is called done. For the notebook, "green" also means it
-executes top to bottom:
-
-```bash
-uv run --with nbclient --with jupyter-client python -c "
-import nbformat; from nbclient import NotebookClient
-nb = nbformat.read('notebooks/01-regimes-and-markov-chains.ipynb', as_version=4)
-NotebookClient(nb, timeout=600, resources={'metadata':{'path':'notebooks/'}}).execute()
-print('clean')"
-```
+A project may add to this (the stochastics thread also requires its notebook to execute).
 
 ## Environment
 
 ```bash
-uv sync                      # everything the live labs need
+uv sync                      # everything the live projects need
 uv sync --group archive      # + torch and pysr, only for archive/toy_world_model
 ```
 
@@ -80,12 +65,13 @@ each notebook's metadata and registered with:
 uv run python -m ipykernel install --user --name workbench --display-name "Python (workbench)"
 ```
 
-If a cell reports `ModuleNotFoundError: No module named 'labs.prob_models'`, the kernel is wrong,
-not the install. Note the shape of that error: `labs` **resolved** and only the submodule was
-missing — meaning some *other* `labs` package was imported. `~/repos/iris/labs` is a separate
-project that also ships a package called `labs` and registers a user-level kernel displayed as
-`Python (labs)`; picking it here imports iris's code. Check with:
+If a cell reports `ModuleNotFoundError: No module named 'projects.<name>'`, check the kernel before
+the install:
 
 ```python
-import labs; print(labs.__path__)   # must be .../workbench/src/labs
+import projects; print(projects.__path__)   # must be .../workbench/projects
 ```
+
+History: the root package used to be `labs`, which collided with `~/repos/iris/labs` — a
+different project whose `Python (labs)` kernel silently imported the wrong code. Keep root package
+names specific to this repo.

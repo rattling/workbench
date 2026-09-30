@@ -1,7 +1,7 @@
 [project]
 name = "workbench"
 version = "0.1.0"
-description = "Workbench — labs, notebooks and notes for the stochastics thread"
+description = "Workbench — self-contained research projects sharing one package and one venv"
 requires-python = ">=3.11"
 dependencies = [
     "ipykernel>=7.2.0",
@@ -16,8 +16,10 @@ dependencies = [
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
+# Each folder under projects/ is one project. Code imports as projects.<project>.<module>.
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
+include = ["projects*"]
 
 [dependency-groups]
 dev = ["pytest>=9.0.2"]
@@ -32,7 +34,7 @@ archive = [
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-exclude = ["archive", "notebooks"]
+exclude = ["archive", "**/notebooks"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP"]
@@ -45,7 +47,9 @@ quote-style = "double"
 indent-style = "space"
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["projects"]
+# importlib mode: two projects can each have a tests/test_models.py without colliding.
+addopts = ["--import-mode=importlib"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
